@@ -9,8 +9,18 @@ import com.mysql.jdbc.PreparedStatement;
 
 import br.sceweb.servico.FabricaDeConexoes;
 
+/**
+ * objetivo - manipular as informacoes no banco de dados
+ * @author O cara mais zika do braaaaaaaaaaaassiiiiiil
+ *
+ */
 public class ConvenioDAO {
 	Logger logger = Logger.getLogger(ConvenioDAO.class);
+/**
+ * objetivo -  registrar um convenio no banco de dados	
+ * @param convenio
+ * @return 0 se nao foi possivel cadastrar e 1 cadastro com sucesso
+ */
 	public int adiciona(Convenio convenio){
 		PreparedStatement ps;
 		int codigoRetorno=0;
