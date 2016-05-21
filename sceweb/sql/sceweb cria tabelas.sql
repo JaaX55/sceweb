@@ -20,6 +20,8 @@ USE `sceweb` ;
 -- -----------------------------------------------------
 -- Table `sceweb`.`empresa`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `sceweb`.`empresa` ;
+
 CREATE TABLE IF NOT EXISTS `sceweb`.`empresa` (
   `cnpj` VARCHAR(14) NOT NULL COMMENT '',
   `nomeDaEmpresa` VARCHAR(45) NOT NULL COMMENT '',
@@ -34,11 +36,15 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `sceweb`.`convenio`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `sceweb`.`convenio` ;
+
 CREATE TABLE IF NOT EXISTS `sceweb`.`convenio` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `empresa_cnpj` VARCHAR(14) NOT NULL COMMENT '',
-  `dataInicio` DATE NULL DEFAULT NULL COMMENT '',
-  `dataFim` DATE NULL DEFAULT NULL COMMENT '',
+  `dataInicio` DATE NOT NULL COMMENT '',
+  `dataFim` DATE NOT NULL COMMENT '',
   INDEX `fk_convenio_empresa_idx` (`empresa_cnpj` ASC)  COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '',
   CONSTRAINT `fk_convenio_empresa`
     FOREIGN KEY (`empresa_cnpj`)
     REFERENCES `sceweb`.`empresa` (`cnpj`)
@@ -51,6 +57,8 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `sceweb`.`usuario`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `sceweb`.`usuario` ;
+
 CREATE TABLE IF NOT EXISTS `sceweb`.`usuario` (
   `userID` VARCHAR(255) NOT NULL COMMENT '',
   `senha` VARCHAR(255) NULL DEFAULT NULL COMMENT '',

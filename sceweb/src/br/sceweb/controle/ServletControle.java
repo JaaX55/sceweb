@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
+import br.sceweb.modelo.Convenio;
+import br.sceweb.modelo.ConvenioDAO;
 import br.sceweb.modelo.Empresa;
 import br.sceweb.modelo.EmpresaDAO;
 
@@ -104,6 +106,22 @@ public class ServletControle extends HttpServlet {
 			request.getRequestDispatcher(url).forward(request, response);
 			
 		}
+		if (parametro.equals("IncluirConvenio")) {
+			url = "/visao/FormConvenio.jsp";
+			try {
+				resultado = cadastrarConvenio(request.getParameter("txtCNPJ"), 
+											  request.getParameter("txtDtInicio"),
+											  request.getParameter("txtDtTermino"));
+				logger.info("resultado do cadastra convenio= " + resultado);
+				request.setAttribute("msg", resultado);
+				request.getRequestDispatcher(url).forward(request, response);
+			} catch (Exception e) {
+				request.setAttribute("msg", resultado);
+				request.getRequestDispatcher(url).forward(request, response);
+				logger.info("erro  = " + e.getMessage());
+
+			}
+		}
 
 	}
 
@@ -120,14 +138,13 @@ public class ServletControle extends HttpServlet {
 			empresa.setTelefone(telefone);
 			empresaDAO.adiciona(empresa);
 			msg = "cadastro realizado com sucesso";
-
 		} catch (Exception e) {
 			msg = e.getMessage();
 		}
-
 		return msg;
 	}
 
+	
 	public Empresa consulta(String cnpj) {
 		logger.info("consulta empresa 2 = " + cnpj);
 		EmpresaDAO empresaDAO = new EmpresaDAO();
@@ -146,4 +163,22 @@ public class ServletControle extends HttpServlet {
 
 		return msg;
 	}
+	public String cadastrarConvenio(String cnpj, String dataInicio, String dataTermino) {
+		String msg = "";
+		int codigoRetorno = 0;
+		ConvenioDAO convenioDAO = new ConvenioDAO();
+		try {
+			Convenio convenio = new Convenio(cnpj, dataInicio, dataTermino);
+			codigoRetorno = convenioDAO.adiciona(convenio);
+			if (codigoRetorno == 0){
+				msg = "erro - cadastro nao realizado ";
+			} else {
+				msg = "cadastro realizado com sucesso";
+			}
+		} catch (Exception e) {
+			msg = e.getMessage();
+		}
+		return msg;
+	}
+	
 }
